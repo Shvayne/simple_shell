@@ -1,12 +1,19 @@
 #ifndef MAIN_H
 #define MAIN_H
+
 #include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 #define MAX_LENGTH 1024
 
-typedef int pid_t;
-void read_input(char **input, size_t *input_size);
-void parse_input(char *input, char **args, char *path);
-void execute_command(char **args);
+extern char **environ;
+
+ssize_t read_input(char **, size_t *);
+char **parse_input(char *, ssize_t);
+void execute_command(char **);
 
 
 

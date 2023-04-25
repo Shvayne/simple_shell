@@ -10,10 +10,6 @@
  */
 char **parse_input(char *input, ssize_t nread)
 {
-	/*
-	 * char *program = strtok(input, " ");
-	 * char *progpath = malloc(strlen(path) + strlen(program) + 1);
-	 */
 	char *input_cp = NULL, *token = NULL, *delim = " \n";
 	int i, num_tokens = 0;
 	char **args;
@@ -42,11 +38,4 @@ char **parse_input(char *input, ssize_t nread)
 	}
 	args[i] = NULL;
 	return (args);
-	/*
-	 * sprintf(progpath, "%s%s", path, program);
-	 * args[0] = progpath;
-	 * i = 1;
-	 * while
-	 *	((args[i++] = strtok(NULL, " ")) != NULL);
-	 */
 }

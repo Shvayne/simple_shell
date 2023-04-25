@@ -10,38 +10,25 @@ int main(void)
 	size_t input_size = 0;
 	ssize_t nread;
 	char **args;
-	int status;
-	pid_t pid;
 
 	while (1)
 	{
 		printf("$ ");
 		nread = read_input(&input, &input_size);
-		if (strcmp(input, "exit\n") == 0)
-		{
-			free(input);
-			exit(EXIT_SUCCESS);
-		}
 		args = parse_input(input, nread);
-		pid = fork();
-
-		if (pid == 0)
+		/* if it's already a path, run am like that */
+		if (strchr(args[0], '/'))
 		{
-			execute_command(args);
-		}
-		else if (pid < 0)
-		{
-			printf("Error: failed to fork\n");
-			free(args[0]);
-			free(input);
-			exit(EXIT_FAILURE);
+			forkxecute(args);
 		}
 		else
 		{
-			do {
-				waitpid(pid, &status, WUNTRACED);
-			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-			free(args[0]);
+			/* check_exist returns the full path if it exists */
+			args[0] = check_exists(args[0]);
+			/* fork will only be called if it exists */
+			if (args[0])
+				forkxecute(args);
+			/* still have to add what to do if it doesn't exist  */
 		}
 	}
 	return (0);

@@ -16,11 +16,11 @@ char *check_exists(char *cmd)
 	if (path)
 	{
 		path_cp = strdup(path); /* Duplicate the path cos of strtok */
-		cmd_length = strlen(cmd);
+		cmd_length = _strlen(cmd);
 		path_token = strtok(path_cp, ":");
 		while (path_token)
 		{
-			dir_length = strlen(path_token);
+			dir_length = _strlen(path_token);
 			full_path = malloc(sizeof(char) * (dir_length + cmd_length + 2));
 			sprintf(full_path, "%s/%s", path_token, cmd);
 			if (stat(full_path, &st) == 0)

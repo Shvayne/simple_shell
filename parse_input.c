@@ -15,7 +15,7 @@ char **parse_input(char *input, ssize_t nread)
 	char **args;
 
 	input_cp = malloc(sizeof(char) * nread);
-	input_cp = strcpy(input_cp, input);
+	input_cp = _strcpy(input_cp, input);
 	/*
 	 * Use strtok first to find the number of tokens
 	 * so we create an array with that number
@@ -33,7 +33,7 @@ char **parse_input(char *input, ssize_t nread)
 	for (i = 0; token; i++)
 	{
 		args[i] = malloc(sizeof(char) * strlen(token));
-		args[i] = strcpy(args[i], token);
+		args[i] = _strcpy(args[i], token);
 		token = strtok(NULL, delim);
 	}
 	args[i] = NULL;

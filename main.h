@@ -18,5 +18,10 @@ char *_getenv(const char *);
 char *check_exists(char *);
 void execute_command(char **);
 void forkxecute(char **);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+int _strcmp(const char *s1, const char *s2);
+char *_strchr(char *s, char c);
+
 
 #endif

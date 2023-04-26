@@ -17,7 +17,7 @@ int main(void)
 		nread = read_input(&input, &input_size);
 		args = parse_input(input, nread);
 		/* if it's already a path, run am like that */
-		if (strchr(args[0], '/'))
+		if (_strchr(args[0], '/'))
 		{
 			forkxecute(args);
 		}

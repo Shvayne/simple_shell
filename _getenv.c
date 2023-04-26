@@ -15,7 +15,7 @@ char *_getenv(const char *name)
 	{
 		env = strdup(environ[i]);
 		var = strtok(env, "=");
-		if (var && (strcmp(var, name) == 0))
+		if (var && (_strcmp(var, name) == 0))
 		{
 			value = strtok(NULL, "=");
 			return (value);

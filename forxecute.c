@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * forkxecute - Creates a new process and executes a command
+ * forxecute - Creates a new process and executes a command
  * @args: Array of argument strings containing the command to be executed
  */
-void forkxecute(char **args)
+void forxecute(char **args)
 {
 	pid_t pid;
 	int status;

@@ -10,25 +10,29 @@ int main(void)
 	size_t input_size = 0;
 	ssize_t nread;
 	char **args;
+	void (*f)(char **);
 
 	while (1)
 	{
 		printf("$ ");
 		nread = read_input(&input, &input_size);
 		args = parse_input(input, nread);
-		/* if it's already a path, run am like that */
+		f = choose_builtin(args[0]);
+		if (f)
+		{
+			f(args);
+			continue;
+		}
 		if (_strchr(args[0], '/'))
 		{
-			forkxecute(args);
+			forxecute(args);
 		}
 		else
 		{
-			/* check_exist returns the full path if it exists */
 			args[0] = check_exists(args[0]);
-			/* fork will only be called if it exists */
 			if (args[0])
-				forkxecute(args);
-			/* still have to add what to do if it doesn't exist  */
+				forxecute(args);
+			/* TODO: what to do if it doesn't exist */
 		}
 	}
 	return (0);

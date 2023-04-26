@@ -12,10 +12,10 @@ char *check_exists(char *cmd)
 	int cmd_length, dir_length;
 	struct stat st;
 
-	path = _getenv("PATH"); /* Used my own getenv function */
+	path = _getenv("PATH");
 	if (path)
 	{
-		path_cp = strdup(path); /* Duplicate the path cos of strtok */
+		path_cp = _strdup(path);
 		cmd_length = _strlen(cmd);
 		path_token = strtok(path_cp, ":");
 		while (path_token)

@@ -41,9 +41,9 @@ int _puts(char *);
 int (*choose_function(const char))(va_list);
 int print_c(va_list);
 int print_s(va_list);
-int print_int(va_list ap);
-void print_number(int n);
-int count_digits(int n);
+int print_int(va_list);
+void print_number(int);
+int count_digits(int);
 char *convert_number(unsigned long int, int, int);
 int print_binary(va_list);
 int print_unsigned(va_list);
@@ -55,14 +55,15 @@ char **parse_input(char *, ssize_t);
 char *_getenv(const char *);
 char *check_exists(char *);
 void execute_command(char **);
-int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-int _strcmp(const char *s1, const char *s2);
-char *_strchr(char *s, char c);
+int _strlen(char *);
+char *_strcpy(char *, char *);
+char *_strdup(char *);
+int _strcmp(const char *, const char *);
+char *_strchr(char *, char);
 void forxecute(char **);
 void (*choose_builtin(char *))(char **);
-void exit_shell(char **args);
-void _env(char **args);
+void exit_shell(char **);
+void _env(char **);
 
 
 #endif

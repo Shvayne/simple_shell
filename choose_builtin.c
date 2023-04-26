@@ -17,7 +17,7 @@ void (*choose_builtin(char *cmd))(char **args)
 
 	for (i = 0; funcs[i].cmd; i++)
 	{
-		if (strcmp(funcs[i].cmd, cmd) == 0)
+		if (_strcmp(funcs[i].cmd, cmd) == 0)
 			break;
 	}
 	return (funcs[i].func);

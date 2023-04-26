@@ -14,7 +14,7 @@ ssize_t read_input(char **input, size_t *input_size)
 	actual_read = getline(input, input_size, stdin);
 	if (actual_read == -1)
 	{
-		printf("\n");
+		_printf("\n");
 		exit(EXIT_SUCCESS);
 	}
 	return (actual_read);

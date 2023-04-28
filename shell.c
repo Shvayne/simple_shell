@@ -6,34 +6,43 @@
  */
 int main(void)
 {
-	char *input = NULL;
-	size_t input_size = 0;
-	ssize_t nread;
-	char **args;
-	void (*f)(char **);
+	cmd_t data;
+	int cmd_check;
 
+	_memset((void *)&data, 0, sizeof(data)); /* set data to 0 */
+	signal(SIGINT, signal_handler); /* handle Ctrl+c */
 	while (1)
 	{
-		printf("$ ");
-		nread = read_input(&input, &input_size);
-		args = parse_input(input, nread);
-		f = choose_builtin(args[0]);
-		if (f)
+		set_cmd_index(&data);
+		if (read_input(&data) < 0) /* if reading fails */
 		{
-			f(args);
+			if (isatty(STDIN_FILENO))
+				_printf("\n");
+			break;
+		}
+		if (parse_input(&data) < 0) /* if splitting fails */
+		{
+			free_data(&data);
 			continue;
 		}
-		if (_strchr(args[0], '/'))
+		cmd_check = classify_cmd(&data);
+		if (cmd_check == 0) /* if built-in, automatically executed */
 		{
-			forxecute(args);
+			free_data(&data); /* free the data structure */
+			continue; /* go back to prompt */
 		}
-		else
+		if (cmd_check < 0) /* if there's an error */
 		{
-			args[0] = check_exists(args[0]);
-			if (args[0])
-				forxecute(args);
-			/* TODO: what to do if it doesn't exist */
+			print_error(&data); /* display the error */
+			continue; /* go back to prompt */
 		}
+		if (forxecute(&data) < 0) /* if there's an error */
+		{
+			print_error(&data); /* display the error */
+			break; /* exit the shell */
+		}
+		free_data(&data);
 	}
+	free_data(&data);
 	return (0);
 }

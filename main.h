@@ -9,9 +9,38 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <stdarg.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <errno.h>
 
-
+/* Global environment variable */
 extern char **environ;
+
+#define PROMPT "$ "
+#define SUCCESS (1)
+#define FAIL (-1)
+
+/**
+ * struct cmd_data - Data structure for commands
+ * @line: Command line typed
+ * @args: Arguments of command line
+ * @cmd: Parsed command (first argument)
+ * @err_msg: Error message
+ * @index: Index of command (1 for 1st command, 2 for 2nd and so on)
+ * @env: Environment
+ *
+ * Description: This structure contains all the data associated with
+ * a particular command when it is run in the shell
+ */
+typedef struct cmd_data
+{
+	char *line;
+	char **args;
+	char *cmd;
+	char *err_msg;
+	unsigned long int index;
+	char *env;
+} cmd_t;
 
 /**
  * struct built_in - Structure for built-in commands
@@ -21,8 +50,8 @@ extern char **environ;
 typedef struct built_in
 {
 	char *cmd;
-	void (*func)(char **);
-} inbuilt;
+	int (*func)(cmd_t *);
+} inbuilt_t;
 
 /**
  * struct specifier - struct to map specifier to functio
@@ -45,25 +74,39 @@ int print_int(va_list);
 void print_number(int);
 int count_digits(int);
 char *convert_number(unsigned long int, int, int);
-int print_binary(va_list);
-int print_unsigned(va_list);
-int print_octal(va_list);
-int print_lower_hexa(va_list);
-int print_upper_hexa(va_list);
-ssize_t read_input(char **, size_t *);
-char **parse_input(char *, ssize_t);
+/* ssize_t read_input(char **, size_t *); */
+/* char **parse_input(char *, ssize_t); */
 char *_getenv(const char *);
-char *check_exists(char *);
-void execute_command(char **);
+/* char *check_exists(char *); */
+/* void execute_command(char **); */
 int _strlen(char *);
 char *_strcpy(char *, char *);
 char *_strdup(char *);
 int _strcmp(const char *, const char *);
 char *_strchr(char *, char);
-void forxecute(char **);
-void (*choose_builtin(char *))(char **);
-void exit_shell(char **);
-void _env(char **);
+char *_strcat(char *, char *);
+/* void forxecute(char **); */
+/* void (*choose_builtin(char *))(char **); */
+/* void exit_shell(char **); */
+/* void _env(char **); */
 
+/* Clones */
+int read_input(cmd_t *);
+void signal_handler(int);
+char *_memset(char *, char, unsigned int);
+void set_cmd_index(cmd_t *);
+int parse_input(cmd_t *);
+int classify_cmd(cmd_t *);
+int choose_builtin(cmd_t *);
+int execute_builtin(cmd_t *);
+int exit_shell(cmd_t *);
+int print_env(cmd_t *);
+int _isalpha(char);
+int _atoi(char *);
+void free_data(cmd_t *);
+void check_path(cmd_t *);
+char *strpath(char *, char *);
+void print_error(cmd_t *);
+int forxecute(cmd_t *);
 
 #endif

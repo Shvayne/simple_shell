@@ -2,11 +2,28 @@
 
 /**
  * exit_shell - Closes the shell program
- * @args: Array of argument strings
+ * @data: Pointer to the command data structure
+ *
+ * Return: Shell exits on success, -1 on failure
  */
-void exit_shell(char **args)
+int exit_shell(cmd_t *data __attribute__((unused)))
 {
-	(void) args;
+	int code, i = 0;
 
-	exit(EXIT_SUCCESS);
+	if (data->args[1] == NULL)
+	{
+		free_data(data);
+		exit(errno);
+	}
+	while (data->args[1][i])
+	{
+		if (_isalpha(data->args[1][i++]) > 0)
+		{
+			data->err_msg = _strdup("Illegal number\n");
+			return (FAIL);
+		}
+	}
+	code = _atoi(data->args[1]);
+	free_data(data);
+	exit(code);
 }

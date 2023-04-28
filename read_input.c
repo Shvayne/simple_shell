@@ -2,20 +2,20 @@
 
 /**
  * read_input - Reads input from command line
- * @input: Pointer to input string
- * @input_size: Number of characters in string
+ * @data: Pointer to command data structure
  *
- * Return: Number of characters read from input
+ * Return: 1 on success, -1 on failure
  */
-ssize_t read_input(char **input, size_t *input_size)
+int read_input(cmd_t *data)
 {
 	ssize_t actual_read;
+	size_t input_size = 0;
 
-	actual_read = getline(input, input_size, stdin);
+	/* display prompt if in interactive mode */
+	if (isatty(STDIN_FILENO))
+		_printf(PROMPT);
+	actual_read = getline(&data->line, &input_size, stdin);
 	if (actual_read == -1)
-	{
-		_printf("\n");
-		exit(EXIT_SUCCESS);
-	}
-	return (actual_read);
+		return (FAIL);
+	return (SUCCESS);
 }

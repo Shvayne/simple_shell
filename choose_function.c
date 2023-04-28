@@ -14,12 +14,6 @@ int (*choose_function(const char specifier))(va_list)
 		{'c', print_c},
 		{'s', print_s},
 		{'d', print_int},
-		{'i', print_int},
-		{'b', print_binary},
-		{'u', print_unsigned},
-		{'o', print_octal},
-		{'x', print_lower_hexa},
-		{'X', print_upper_hexa},
 		{'\0', NULL}
 	};
 

@@ -2,9 +2,11 @@
 
 /**
  * forxecute - Creates a new process and executes a command
- * @args: Array of argument strings containing the command to be executed
+ * @data: Pointer to the command data structure
+ *
+ * Return: 1 on success, 0 on failure
  */
-void forxecute(char **args)
+int forxecute(cmd_t *data)
 {
 	pid_t pid;
 	int status;
@@ -12,17 +14,21 @@ void forxecute(char **args)
 	pid = fork();
 	if (pid == 0)
 	{
-		execute_command(args);
+		signal(SIGINT, SIG_DFL);
+		if (execve(data->cmd, data->args, environ) == -1)
+		{
+			data->err_msg = _strdup("not found\n");
+			return (FAIL);
+		}
 	}
 	else if (pid < 0)
 	{
-		perror("Error");
-		exit(EXIT_FAILURE);
+		data->err_msg = _strdup("Unable to fork\n");
+		return (FAIL);
 	}
 	else
 	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		waitpid(pid, &status, WUNTRACED);
 	}
+	return (SUCCESS);
 }

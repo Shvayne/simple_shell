@@ -2,40 +2,27 @@
 
 /**
  * parse_input - Breaks command line input into tokens
- * and puts them in an array
- * @input: Input string
- * @nread: Number of characters in string
+ * and puts them in the command data structure
+ * @data: Command data structure
  *
- * Return: Pointer to array of string tokens
+ * Return: 1 on success, -1 on failure
  */
-char **parse_input(char *input, ssize_t nread)
+int parse_input(cmd_t *data)
 {
-	char *input_cp = NULL, *token = NULL, *delim = " \n";
-	int i, num_tokens = 0;
-	char **args;
+	char *token = NULL, *delim = " \n\t\r\a\v";
+	int i;
 
-	input_cp = malloc(sizeof(char) * nread);
-	input_cp = _strcpy(input_cp, input);
-	/*
-	 * Use strtok first to find the number of tokens
-	 * so we create an array with that number
-	 */
-	token = strtok(input, delim);
-	while (token)
-	{
-		num_tokens++;
-		token = strtok(NULL, delim);
-	}
-	args = malloc((sizeof(char *) * num_tokens) + 1);
-
-	/* Use strtok again to put each token in the array */
-	token = strtok(input_cp, delim);
+	if (_strcmp(data->line, "\n") == 0)
+		return (FAIL);
+	data->args = malloc(sizeof(char *) * 64);
+	if (!data->args)
+		return (FAIL);
+	token = strtok(data->line, delim);
 	for (i = 0; token; i++)
 	{
-		args[i] = malloc(sizeof(char) * strlen(token));
-		args[i] = _strcpy(args[i], token);
+		data->args[i] = token;
 		token = strtok(NULL, delim);
 	}
-	args[i] = NULL;
-	return (args);
+	data->args[i] = NULL;
+	return (SUCCESS);
 }

@@ -6,14 +6,20 @@
  *
  * Return: Shell exits on success, -1 on failure
  */
-int exit_shell(cmd_t *data __attribute__((unused)))
+int exit_shell(cmd_t *data)
 {
 	int code, i = 0;
 
-	if (data->args[1] == NULL)
+	if (!data->args[1])
 	{
 		free_data(data);
-		exit(errno);
+		if (errno == 0)
+			exit(EXIT_SUCCESS);
+		else if (errno == 25 && data->index == 2)
+			exit(2);
+		else
+			exit(errno);
+	
 	}
 	while (data->args[1][i])
 	{

@@ -8,13 +8,11 @@
  */
 int classify_cmd(cmd_t *data)
 {
-	int result;
-
 	/* if command contains /, input it into the structure */
 	if (_strchr(data->args[0], '/'))
 	{
 		data->cmd = _strdup(data->args[0]);
-		result = SUCCESS;
+		return (SUCCESS);
 	}
 	/* if command is a built-in, execute it */
 	if (choose_builtin(data) > 0)
@@ -25,6 +23,5 @@ int classify_cmd(cmd_t *data)
 	}
 	/* check PATH. If it is in the PATH, input into the structure */
 	check_path(data);
-	result = SUCCESS;
-	return (result);
+	return (SUCCESS);
 }

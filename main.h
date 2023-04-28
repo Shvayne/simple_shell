@@ -27,7 +27,6 @@ extern char **environ;
  * @cmd: Parsed command (first argument)
  * @err_msg: Error message
  * @index: Index of command (1 for 1st command, 2 for 2nd and so on)
- * @env: Environment
  *
  * Description: This structure contains all the data associated with
  * a particular command when it is run in the shell
@@ -39,7 +38,6 @@ typedef struct cmd_data
 	char *cmd;
 	char *err_msg;
 	unsigned long int index;
-	char *env;
 } cmd_t;
 
 /**
@@ -76,7 +74,7 @@ int count_digits(int);
 char *convert_number(unsigned long int, int, int);
 /* ssize_t read_input(char **, size_t *); */
 /* char **parse_input(char *, ssize_t); */
-char *_getenv(const char *);
+char *_getenv(char *);
 /* char *check_exists(char *); */
 /* void execute_command(char **); */
 int _strlen(char *);

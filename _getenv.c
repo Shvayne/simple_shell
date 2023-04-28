@@ -6,22 +6,25 @@
  *
  * Return: Value of environment variable or NULL if not found
  */
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
-	unsigned int i = 0;
-	char *value, *var, *env;
+	char **environ_cursor, *env_ptr, *name_ptr;
 
-	while (environ[i])
+	environ_cursor = environ;
+	while (*environ_cursor)
 	{
-		env = _strdup(environ[i]);
-		var = strtok(env, "=");
-		if (var && (_strcmp(var, name) == 0))
+		env_ptr = *environ_cursor;
+		name_ptr = name;
+		while (*env_ptr == *name_ptr)
 		{
-			value = strtok(NULL, "=");
-			return (value);
+			if (*env_ptr == '=')
+				break;
+			env_ptr++;
+			name_ptr++;
 		}
-		i++;
+		if ((*env_ptr == '=') && (*name_ptr == '\0'))
+			return (env_ptr + 1);
+		environ_cursor++;
 	}
-	free(env);
 	return (NULL);
 }

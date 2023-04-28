@@ -4,7 +4,7 @@
  * forxecute - Creates a new process and executes a command
  * @data: Pointer to the command data structure
  *
- * Return: 1 on success, 0 on failure
+ * Return: 1 on success, -1 on failure
  */
 int forxecute(cmd_t *data)
 {
@@ -16,15 +16,8 @@ int forxecute(cmd_t *data)
 	{
 		signal(SIGINT, SIG_DFL);
 		if (execve(data->cmd, data->args, environ) == -1)
-		{
-			data->err_msg = _strdup("not found\n");
+		data->err_msg = _strdup("not found\n");
 			return (FAIL);
-		}
-	}
-	else if (pid < 0)
-	{
-		data->err_msg = _strdup("Unable to fork\n");
-		return (FAIL);
 	}
 	else
 	{

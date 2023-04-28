@@ -17,6 +17,8 @@ int exit_shell(cmd_t *data)
 			exit(EXIT_SUCCESS);
 		else if (errno == 25 && data->index == 2)
 			exit(2);
+		else if (errno == 25 && data->index == 1)
+			exit(EXIT_SUCCESS);
 		else
 			exit(errno);
 	

@@ -16,8 +16,10 @@ int forxecute(cmd_t *data)
 	{
 		signal(SIGINT, SIG_DFL);
 		if (execve(data->cmd, data->args, environ) == -1)
-		data->err_msg = _strdup("not found\n");
+		{
+			perror("Error");
 			return (FAIL);
+		}
 	}
 	else
 	{

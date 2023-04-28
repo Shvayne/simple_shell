@@ -23,5 +23,10 @@ int classify_cmd(cmd_t *data)
 	}
 	/* check PATH. If it is in the PATH, input into the structure */
 	check_path(data);
+	if (!(_strchr(data->cmd, '/')))
+	{
+		data->err_msg = _strdup("not found\n");
+		return (FAIL);
+	}
 	return (SUCCESS);
 }

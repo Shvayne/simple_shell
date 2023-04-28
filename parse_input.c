@@ -10,9 +10,19 @@
 int parse_input(cmd_t *data)
 {
 	char *token = NULL, *delim = " \n\t\r\a\v";
-	int i;
+	int i, all_spaces = 1;
 
 	if (_strcmp(data->line, "\n") == 0)
+		return (FAIL);
+	for (i = 0; data->line[i] != '\n'; i++)
+	{
+		if (data->line[i] != ' ')
+		{
+			all_spaces = 0;
+			break;
+		}
+	}
+	if (all_spaces)
 		return (FAIL);
 	data->args = malloc(sizeof(char *) * 64);
 	if (!data->args)

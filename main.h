@@ -37,7 +37,7 @@ typedef struct cmd_data
 	char **args;
 	char *cmd;
 	char *err_msg;
-	unsigned long int index;
+	int index;
 } cmd_t;
 
 /**

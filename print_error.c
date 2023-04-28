@@ -6,5 +6,5 @@
  */
 void print_error(cmd_t *data)
 {
-	_printf("hsh: %d: %s: %s", data->index, data->args[0], data->err_msg);
+	fprintf(stderr, "hsh: %d: %s: %s", data->index, data->args[0], data->err_msg);
 }

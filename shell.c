@@ -47,5 +47,5 @@ int main(int ac __attribute__((unused)), char **av)
 		free_data(&data);
 	}
 	free_data(&data);
-	exit((errno) ? errno : EXIT_SUCCESS);
+	exit((errno == 25 || !errno) ? EXIT_SUCCESS : errno);
 }

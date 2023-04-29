@@ -6,5 +6,10 @@
  */
 void print_error(cmd_t *data)
 {
-	fprintf(stderr, "hsh: %d: %s: %s", data->index, data->args[0], data->err_msg);
+	char *prog = data->prog_name;
+	char *cmd = data->args[0];
+	char *err = data->err_msg;
+
+	fprintf(stderr, "%s: %d: %s: %s", prog, data->index, cmd, err);
+	free_data(data);
 }

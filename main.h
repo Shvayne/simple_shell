@@ -27,6 +27,7 @@ extern char **environ;
  * @cmd: Parsed command (first argument)
  * @err_msg: Error message
  * @index: Index of command (1 for 1st command, 2 for 2nd and so on)
+ * @prog_name: Name of executable (for displaying error)
  *
  * Description: This structure contains all the data associated with
  * a particular command when it is run in the shell
@@ -38,6 +39,7 @@ typedef struct cmd_data
 	char *cmd;
 	char *err_msg;
 	int index;
+	char *prog_name;
 } cmd_t;
 
 /**
@@ -72,27 +74,18 @@ int print_int(va_list);
 void print_number(int);
 int count_digits(int);
 char *convert_number(unsigned long int, int, int);
-/* ssize_t read_input(char **, size_t *); */
-/* char **parse_input(char *, ssize_t); */
 char *_getenv(char *);
-/* char *check_exists(char *); */
-/* void execute_command(char **); */
 int _strlen(char *);
 char *_strcpy(char *, char *);
 char *_strdup(char *);
 int _strcmp(const char *, const char *);
 char *_strchr(char *, char);
 char *_strcat(char *, char *);
-/* void forxecute(char **); */
-/* void (*choose_builtin(char *))(char **); */
-/* void exit_shell(char **); */
-/* void _env(char **); */
 
-/* Clones */
 int read_input(cmd_t *);
 void signal_handler(int);
 char *_memset(char *, char, unsigned int);
-void set_cmd_index(cmd_t *);
+void set_cmd_index(cmd_t *, char **);
 int parse_input(cmd_t *);
 int classify_cmd(cmd_t *);
 int choose_builtin(cmd_t *);

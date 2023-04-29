@@ -9,15 +9,12 @@
 char *_strdup(char *s)
 {
 	size_t length;
-	char *result, *p;
+	char *result;
 
-	length = _strlen(s) + 1;
+	length = _strlen(s) +  1;
 	result = malloc(sizeof(char) * length);
 	if (!result)
 		return (NULL);
-	p = result;
-	while (*s)
-		*p++ = *s++;
-	*p = '\0';
+	_strcpy(result, s);
 	return (result);
 }

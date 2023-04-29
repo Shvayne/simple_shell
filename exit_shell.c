@@ -21,7 +21,6 @@ int exit_shell(cmd_t *data)
 			exit(EXIT_SUCCESS);
 		else
 			exit(errno);
-	
 	}
 	while (data->args[1][i])
 	{

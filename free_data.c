@@ -14,4 +14,6 @@ void free_data(cmd_t *data)
 	data->cmd = NULL;
 	free(data->err_msg);
 	data->err_msg = NULL;
+	free(data->prog_name);
+	data->prog_name = NULL;
 }

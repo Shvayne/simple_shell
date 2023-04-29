@@ -10,20 +10,31 @@ int forxecute(cmd_t *data)
 {
 	pid_t pid;
 	int status;
+	struct stat st;
 
-	pid = fork();
-	if (pid == 0)
+	if (stat(data->cmd, &st) == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		if (execve(data->cmd, data->args, environ) == -1)
+		pid = fork();
+		if (pid == 0)
 		{
-			perror("Error");
-			return (FAIL);
+			signal(SIGINT, SIG_DFL);
+			if (execve(data->cmd, data->args, environ) == -1)
+			{
+				data->err_msg = _strdup("not found\n");
+				errno = 127;
+				return (FAIL);
+			}
+		}
+		else
+		{
+			waitpid(pid, &status, WUNTRACED);
 		}
 	}
 	else
 	{
-		waitpid(pid, &status, WUNTRACED);
+		data->err_msg = _strdup("not found\n");
+		errno = 127;
+		return (FAIL);
 	}
 	return (SUCCESS);
 }

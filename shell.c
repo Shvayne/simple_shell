@@ -2,9 +2,12 @@
 
 /**
  * main - Simple shell program
+ * @ac: Number of arguments
+ * @av: Array of argument strings
+ *
  * Return: Always 0
  */
-int main(void)
+int main(int ac __attribute__((unused)), char **av)
 {
 	cmd_t data;
 	int cmd_check;
@@ -13,7 +16,7 @@ int main(void)
 	signal(SIGINT, signal_handler); /* handle Ctrl+c */
 	while (1)
 	{
-		set_cmd_index(&data);
+		set_cmd_index(&data, av);
 		if (read_input(&data) < 0) /* if reading fails */
 		{
 			if (isatty(STDIN_FILENO))
@@ -39,10 +42,10 @@ int main(void)
 		if (forxecute(&data) < 0) /* if there's an error */
 		{
 			print_error(&data); /* display the error */
-			break; /* exit the shell */
+			continue; /* go back to prompt */
 		}
 		free_data(&data);
 	}
 	free_data(&data);
-	exit(EXIT_SUCCESS);
+	exit((errno) ? errno : EXIT_SUCCESS);
 }
